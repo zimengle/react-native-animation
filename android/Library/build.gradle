@@ -17,5 +17,6 @@ android {
 }
 
 dependencies {
+    compile 'com.google.code.gson:gson:+'
     compile "com.facebook.react:react-native:+"
 }

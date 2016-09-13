@@ -4,7 +4,7 @@
   "description": "A native animation UI component for react-native",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,10 @@
     "react-native",
     "animation"
   ],
+  "dependencies": {
+    "react": "15.3.0",
+    "react-native": "0.29.0"
+  },
   "author": "zhang740",
   "license": "MIT"
 }

@@ -1,17 +1,17 @@
-package com.baidu.rn.animation.app;
+package com.baidu.rn.animation;
 
-import com.baidu.rn.animation.BaiduAnimationViewManager;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+public class BaiduAnimationViewPackage implements ReactPackage {
 
-public class NativeModules implements ReactPackage{
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Collections.emptyList();
@@ -24,6 +24,6 @@ public class NativeModules implements ReactPackage{
 
     @Override
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Collections.<ViewManager>singletonList(new BaiduAnimationViewManager());
+        return Arrays.<ViewManager>asList(new BaiduAnimationViewManager());
     }
 }

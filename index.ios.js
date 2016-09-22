@@ -5,6 +5,7 @@ import {
 
 // import App from './src/ListApp'
 
-import Index from './examples/index'
+import Danmaku  from './examples/sence/Danmaku'
 
-AppRegistry.registerComponent('AwesomeProject2', () => Index);
+AppRegistry.registerComponent('AwesomeProject', () => Danmaku);
+

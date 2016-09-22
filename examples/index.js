@@ -2,28 +2,35 @@ import React, {Component} from 'react';
 import {Text, Navigator,TouchableHighlight} from 'react-native';
 import Modal from './sence/Modal';
 import Danmaku from './sence/Danmaku';
+import Home from './sence/Home';
 
-export default class Home extends Component {
+export default class Index extends Component {
     render() {
         const routes = [
-            {title: 'First Scene', index: 0},
-            {title: 'Second Scene', index: 1},
+            {name: 'Home'},
+            {name: 'Modal'},
+            {name: 'Danmaku'}
         ];
         return (
             <Navigator
                 initialRoute={routes[0]}
                 initialRouteStack={routes}
                 renderScene={(route, navigator) => {
+
                     let Sence;
-                    switch (route.index) {
-                        case 0:
+                    switch (route.name) {
+                        case "Home":
+                            Sence = Home;
+                            break;
+                        case "Modal":
                             Sence = Modal;
                             break;
-                        case 1:
+                        case "Danmaku":
                             Sence = Danmaku;
                             break;
                     }
-                    if(scene){
+
+                    if(Sence){
                         return <Sence navigator={navigator}/>
                     }
                     return null;
@@ -32,7 +39,7 @@ export default class Home extends Component {
                     <Navigator.NavigationBar
                         routeMapper={{
                             LeftButton: (route, navigator, index, navState) => {
-                                if (route.index === 0) {
+                                if (index === 0) {
                                     return null;
                                 } else {
                                     return (
@@ -49,10 +56,10 @@ export default class Home extends Component {
                                 return (<Text>Awesome Nav Bar</Text>);
                             },
                         }}
-                        style={{backgroundColor: 'gray'}}
+                        style={{height:30,backgroundColor:"#4285f4"}}
                     />
                 }
-                style={{padding: 100}}
+                style={{paddingTop:30}}
             />
         );
     }

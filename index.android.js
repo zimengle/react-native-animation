@@ -5,6 +5,8 @@ import {
 
 // import App from './src/ListApp'
 
-import Home from './scene/home'
+// import Index from './examples/index'
 
-AppRegistry.registerComponent('ReactNativeAnimation', () => Home);
+import Danmaku  from './examples/sence/Danmaku'
+
+AppRegistry.registerComponent('AwesomeProject2', () => Danmaku);

@@ -3,6 +3,7 @@ package com.baidu.rn.animation.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.baidu.rn.animation.BaiduAnimationViewPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -24,7 +25,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-                    new NativeModules()
+                    new BaiduAnimationViewPackage()
             );
         }
     };

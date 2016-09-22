@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import {AnimationView} from '../../dist/animation-view.js'
+import {View, Text,Dimensions} from 'react-native';
+import AnimationView from '../../../src/AnimationView'
+
+
 
 export default class Danmaku extends Component {
 
@@ -28,7 +30,7 @@ export default class Danmaku extends Component {
             () => {
                 this.start();
             },
-            3000
+            100
         );
     }
 
@@ -37,33 +39,30 @@ export default class Danmaku extends Component {
     }
 
     addItem(i) {
-        this.state.list.push({
-            text: "text" + i,
-            top: Math.floor(Math.random() * 800)
-        });
+        let {height, width} = Dimensions.get('window');
+        console.info(width,height);
+        let top = Math.floor(Math.random()*100);
+        this.state.list.push(
+            <AnimationView style={{top:top}} duration={3000} translate={{from: {x: 0, y: 0}, to: {x: 1080, y: 0}}}
+                           autoplay={true} key={i}>
+                <Text>{"text" + i}</Text>
+            </AnimationView>
+        );
         this.setState({
             list: this.state.list
         });
     }
 
-    renderList() {
-        let list = [];
-        for (let i = 0; i < this.state.list.length; i++) {
-            let item = this.state.list[i];
-            list.push(
-                <AnimationView key={i}>
-                    <Text style={{position: 'absolute', right: 0, top: item.top}}>{item.text}</Text>
-                </AnimationView>
-            );
-        }
-        return list;
-
-    }
 
     render() {
         return (
             <View>
-                {this.renderList()}
+                {
+                    this.state.list.map(function (comp, i) {
+
+                        return comp;
+                    })
+                }
             </View>
         );
     }

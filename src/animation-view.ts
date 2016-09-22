@@ -1,9 +1,3 @@
-/**
- * @author      : zhangzhenyang
- * @description : 动画基础组件
- * @update      : 2016-07-24 17:35:49
- */
-
 import * as React from 'react'
 import {
     DeviceEventEmitter,
@@ -12,7 +6,6 @@ import {
     UIManager,
     requireNativeComponent,
     Platform,
-    View,
 } from 'react-native'
 import immutableRenderDecorator from './immutableRenderDecorator'
 import { AnimationModel, AnimationGroup } from './animation-model'
@@ -45,24 +38,22 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
     private data: AnimationModel[]
     private isUnmount = false
 
-    constructor(props: any, context: any) {
+    constructor(props: PropsDefine, context: any) {
         super(props, context)
 
         this._assignRoot = this._assignRoot.bind(this)
         this.isStart = false
+        this.data = this.processData(props.data)
     }
 
-    start() {
-        if (Platform.OS === 'android') {
-            return
-        }
+    public start() {
         if (this.isUnmount) {
             return false
         }
         UIManager.dispatchViewManagerCommand(
             findNodeHandle(this),
             UIManager.TBNAnimationView.Commands.start,
-            [this.data]
+            [Platform.OS === 'android' ? JSON.stringify(this.data || []) : this.data]
         )
         this.isStart = true
 
@@ -80,10 +71,7 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
         }
     }
 
-    clear() {
-        if (Platform.OS === 'android') {
-            return
-        }
+    public clear() {
         try {
             UIManager.dispatchViewManagerCommand(
                 findNodeHandle(this),
@@ -95,21 +83,15 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
         this.isStart = false
     }
 
-    add(data?: AnimationModel[]) {
-        if (Platform.OS === 'android') {
-            return
-        }
+    public add(data?: AnimationModel[]) {
         if (data) {
-            this.data = data
-        }
-        if (!this.data) {
-            this.processData(this.props)
+            this.data = this.processData(data)
         }
         // UIManager.dispatchViewManagerCommand(
         //     findNodeHandle(this),
         //     UIManager.TBNAnimationView.Commands.add,
         //     [data || this.data]
-        //     // [JSON.stringify(data || this.data)]
+        //     // [JSON.stringify(this.data || data)]
         // )
     }
 
@@ -135,7 +117,7 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
                 this.clear()
             }
 
-            this.processData(nextProps)
+            this.data = this.processData(nextProps.data)
             this.add()
             if (this.props.autoplay) {
                 setTimeout(() => {
@@ -146,19 +128,12 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
     }
 
     render() {
-        if (Platform.OS === 'android') {
-            return (
-                <View
-                    style={this.props.style}>
-                    {this.props.children}
-                </View>
-            )
-        }
-
         return (
             <TBNAnimationView
                 ref={this._assignRoot}
-                style={this.props.style}>
+                style={[this.props.style, {
+                    opacity: this.props.style.opacity || 1
+                } as React.ViewStyle]}>
                 {this.props.children}
             </TBNAnimationView>
         )
@@ -172,26 +147,38 @@ export class AnimationView extends React.Component<PropsDefine, {}> {
         this._root.setNativeProps(nativeProps)
     }
 
-    private processData(props: PropsDefine) {
-        this.data = (props.data || []).slice()
-        for (let i = 0; i < this.data.length; i++) {
-            let data = this.data[i]
-            if (data.type != 'Translate') {
-                continue
+    private processData(oriData: AnimationModel[]): AnimationModel[] {
+        let data = (oriData || []).slice()
+        data.forEach((ani) => {
+            if (ani.duration) {
+                ani.duration = parseInt(ani.duration.toFixed(0))
             }
-            // FIXME Android 需要
-            // if (data.from) {
-            //     data.from *= this._screen_scale
-            // }
-            // if (data.from2) {
-            //     data.from2 *= this._screen_scale
-            // }
-            // if (data.to) {
-            //     data.to *= this._screen_scale
-            // }
-            // if (data.to2) {
-            //     data.to2 *= this._screen_scale
-            // }
-        }
+            if (ani.startOffset) {
+                ani.startOffset = parseInt(ani.startOffset.toFixed(0))
+            }
+            if (ani.type == 'Translate' && Platform.OS === 'android') {
+                if (ani.from) {
+                    ani.from *= this._screen_scale
+                } else {
+                    ani.from = 0
+                }
+                if (ani.from2) {
+                    ani.from2 *= this._screen_scale
+                } else {
+                    ani.from2 = 0
+                }
+                if (ani.to) {
+                    ani.to *= this._screen_scale
+                } else {
+                    ani.to = 0
+                }
+                if (ani.to2) {
+                    ani.to2 *= this._screen_scale
+                } else {
+                    ani.to2 = 0
+                }
+            }
+        })
+        return data
     }
 }

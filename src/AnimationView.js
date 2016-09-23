@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {UIManager, requireNativeComponent, View, findNodeHandle, Animated, Easing} from 'react-native';
 
 
-let Animation = class AnimationView extends React.Component {
+let AnimationView = class AnimationView extends React.Component {
 
 
     constructor(props) {
@@ -183,7 +183,7 @@ let Animation = class AnimationView extends React.Component {
     }
 }
 
-Animation.propTypes = {
+AnimationView.propTypes = {
     ...View.propTypes,
     translate: React.PropTypes.shape({
         from: React.PropTypes.shape({
@@ -223,6 +223,6 @@ Animation.propTypes = {
 
 }
 
-export default Animation;
+export default AnimationView;
 
 

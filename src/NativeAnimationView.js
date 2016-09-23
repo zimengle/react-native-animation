@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {UIManager,requireNativeComponent,View,findNodeHandle} from 'react-native';
 
 
-const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', AnimationView, {
+const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', NativeAnimationView, {
     nativeOnly: {
         onAnimationStart: true, onAnimationEnd: true,onChange:true
     }
 });
-let AnimationView = class AnimationView extends React.Component {
+let NativeAnimationView = class NativeAnimationView extends React.Component {
 
 
     constructor(props) {
@@ -168,7 +168,7 @@ let AnimationView = class AnimationView extends React.Component {
     }
 }
 
-AnimationView.propTypes = {
+NativeAnimationView.propTypes = {
     ...View.propTypes,
     translate: React.PropTypes.shape({
         from: React.PropTypes.shape({
@@ -208,6 +208,6 @@ AnimationView.propTypes = {
 
 }
 
-export default AnimationView;
+export default NativeAnimationView;
 
 

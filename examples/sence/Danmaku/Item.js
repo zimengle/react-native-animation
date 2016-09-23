@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text,Dimensions,PixelRatio} from 'react-native';
 import AnimationView from '../../../src/AnimationView';
 
-import Animation from '../../../src/Animation';
+// import Animation from '../../../src/Animation';
 export default class Item extends Component {
 
     constructor() {

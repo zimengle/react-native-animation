@@ -1,13 +1,12 @@
 package com.baidu.rn.animation;
 
 import android.content.Context;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
 import com.baidu.rn.animation.model.Model;
@@ -35,20 +34,12 @@ public class BaiduAnimationView extends ReactViewGroup {
             animationSet.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    ReactContext reactContext = (ReactContext)getContext();
-                    reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                            getId(),
-                            "onAnimationStart",
-                            null);
+                    dispatchEvent("start");
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    ReactContext reactContext = (ReactContext)getContext();
-                    reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                            getId(),
-                            "onAnimationEnd",
-                            null);
+                    dispatchEvent("end");
                 }
 
                 @Override
@@ -60,6 +51,16 @@ public class BaiduAnimationView extends ReactViewGroup {
         }
 
 
+    }
+
+    private void dispatchEvent(String type){
+        WritableMap event = Arguments.createMap();
+        event.putString("type", type);
+        ReactContext reactContext = (ReactContext)getContext();
+        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                getId(),
+                "topChange",
+                event);
     }
 
     public void stop(){

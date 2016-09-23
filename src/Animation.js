@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
-import {UIManager,requireNativeComponent,View,findNodeHandle} from 'react-native';
+import {UIManager, requireNativeComponent, View, findNodeHandle, Animated, Easing} from 'react-native';
 
 
-const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', AnimationView, {
-    nativeOnly: {
-        onAnimationStart: true, onAnimationEnd: true,onChange:true
-    }
-});
-let AnimationView = class AnimationView extends React.Component {
+let Animation = class AnimationView extends React.Component {
 
 
     constructor(props) {
@@ -22,13 +17,18 @@ let AnimationView = class AnimationView extends React.Component {
         this._repeat = null;
         this._autoplay = null;
         this._isStart = false;
+        this._animations = null;
+        this.state = {
+            translateX: new Animated.Value(0),
+            translateY: new Animated.Value(0)
+        }
     }
 
     componentWillReceiveProps(nextProps) {
-        this._diff(this.props,nextProps);
+        this._diff(this.props, nextProps);
     }
 
-    _diff(prev,next){
+    _diff(prev, next) {
         if (next !== prev) {
             if (prev.translate !== next.translate) {
                 this.setTranslate(next.translate);
@@ -60,9 +60,10 @@ let AnimationView = class AnimationView extends React.Component {
         }
     }
 
-    _onEvent(event){
 
-        switch(event.type){
+    _onEvent(event) {
+
+        switch (event.type) {
             case "start":
                 this._onAnimationStart();
                 break;
@@ -71,33 +72,37 @@ let AnimationView = class AnimationView extends React.Component {
                 break;
         }
     }
+
     _onAnimationStart() {
         this._isStart = true;
         this.props.onStart && this.props.onStart();
     }
 
     _onAnimationEnd() {
-        console.info("_onAnimationEnd");
         this._isStart = false;
         this.props.onEnd && this.props.onEnd();
     }
 
     componentDidMount() {
         this._bridge = findNodeHandle(this.refs.BaiduAnimationView);
-        this._diff({},this.props);
+        this._diff({}, this.props);
     }
 
     render() {
-        console.info("render");
         return (
-            <BaiduAnimationView
+            <Animated.View
                 ref={"BaiduAnimationView"}
-                style={this.props.style}
-                onChange={this._onEvent.bind(this)}>
+                style={[this.props.style, {
+                    transform: [{
+                        translateX: this.state.translateX,
+                        translateY: this.state.translateY
+                    }]
+                }]}>
                 {this.props.children}
-            </BaiduAnimationView>
+            </Animated.View>
         )
     }
+
 
     setDelay(delay) {
         this._delay = delay;
@@ -108,33 +113,43 @@ let AnimationView = class AnimationView extends React.Component {
     }
 
 
-    _dispatch(action, data) {
-        UIManager.dispatchViewManagerCommand(
-            this._bridge,
-            action,
-            data
-        )
-    }
-
     setAutoPlay(autoplay) {
         this._autoplay = autoplay;
     }
 
+
     start() {
-        this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
-            rotate: this._rotate,
-            translate: this._translate,
-            scale: this._scale,
-            opacity: this._opacity,
-            duration: this._duration || 200,
-            interpolator: this._interpolator || 'linear',
-            delay: this._delay || 0,
-            repeat: this._repeat || 0
-        }]);
+        if (this._translate) {
+            console.info(this._duration);
+            let from = this._translate.from, to = this._translate.to;
+            this.state.translateY.setValue(from.y);
+            this.state.translateX.setValue(from.x);
+            this._animations = Animated.parallel([
+                Animated.timing(this.state.translateY, {
+                    toValue: to.y,
+                    duration: this._duration*2 || 500,
+                    easing: Easing.linear
+                }),
+                Animated.timing(this.state.translateX, {
+                    toValue: to.x,
+                    duration: this._duration*2 || 500,
+                    easing: Easing.linear
+                }),
+            ])
+            this._animations.start((res) => {
+                if (res.finished) {
+                    this._onAnimationEnd();
+                }
+            });
+            this._onAnimationStart();
+
+        }
     }
 
     stop() {
-        this._dispatch(UIManager.BaiduAnimationView.Commands.stop, null);
+        if (this._animations) {
+            this._animations.stop();
+        }
     }
 
     setDuration(duration) {
@@ -168,7 +183,7 @@ let AnimationView = class AnimationView extends React.Component {
     }
 }
 
-AnimationView.propTypes = {
+Animation.propTypes = {
     ...View.propTypes,
     translate: React.PropTypes.shape({
         from: React.PropTypes.shape({
@@ -208,6 +223,6 @@ AnimationView.propTypes = {
 
 }
 
-export default AnimationView;
+export default Animation;
 
 

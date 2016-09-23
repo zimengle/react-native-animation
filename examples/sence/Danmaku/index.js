@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text,Dimensions} from 'react-native';
-import AnimationView from '../../../src/AnimationView'
+import {View, Text,Dimensions,PixelRatio} from 'react-native';
+import Item from './Item'
 
 
 
@@ -26,12 +26,12 @@ export default class Danmaku extends Component {
 
     start() {
         this.doStart();
-        this.timer = setTimeout(
+       /* this.timer = setTimeout(
             () => {
                 this.start();
             },
             100
-        );
+        );*/
     }
 
     componentWillUnmount() {
@@ -39,14 +39,11 @@ export default class Danmaku extends Component {
     }
 
     addItem(i) {
-        let {height, width} = Dimensions.get('window');
-        console.info(width,height);
-        let top = Math.floor(Math.random()*100);
+        let {height} = Dimensions.get('window');
+        let top = Math.floor(Math.random()*height);
         this.state.list.push(
-            <AnimationView style={{top:top}} duration={3000} translate={{from: {x: 0, y: 0}, to: {x: 1080, y: 0}}}
-                           autoplay={true} key={i}>
-                <Text>{"text" + i}</Text>
-            </AnimationView>
+            <Item key={i} style={{position:'absolute',top:top}}>
+            </Item>
         );
         this.setState({
             list: this.state.list

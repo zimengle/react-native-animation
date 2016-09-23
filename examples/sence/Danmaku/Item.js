@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text,Dimensions,PixelRatio} from 'react-native';
-import AnimationView from '../../../src/AnimationView';
+// import AnimationView from '../../../src/AnimationView';
 
-// import Animation from '../../../src/Animation';
+import NativeAnimationView from '../../../src/NativeAnimationView';
 export default class Item extends Component {
 
     constructor() {
@@ -36,7 +36,7 @@ export default class Item extends Component {
             return null;
         }
         return (
-            <AnimationView onEnd={()=> {
+            <NativeAnimationView onEnd={()=> {
                 this.remove();
             }} onStart={()=>{
                 this.setState({
@@ -46,7 +46,7 @@ export default class Item extends Component {
                 <Text onLayout={(event)=> {
                     this.start(event.nativeEvent.layout.width)
                 }}>帅气啊</Text>
-            </AnimationView>
+            </NativeAnimationView>
         );
     }
 }

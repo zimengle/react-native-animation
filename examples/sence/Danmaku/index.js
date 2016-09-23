@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text,Dimensions,PixelRatio} from 'react-native';
+import {View, Text, Dimensions, PixelRatio} from 'react-native';
 import Item from './Item'
-
 
 
 export default class Danmaku extends Component {
@@ -26,12 +25,12 @@ export default class Danmaku extends Component {
 
     start() {
         this.doStart();
-       /* this.timer = setTimeout(
+        this.timer = setTimeout(
             () => {
                 this.start();
             },
             100
-        );*/
+        );
     }
 
     componentWillUnmount() {
@@ -40,9 +39,9 @@ export default class Danmaku extends Component {
 
     addItem(i) {
         let {height} = Dimensions.get('window');
-        let top = Math.floor(Math.random()*height);
+        let top = Math.floor(Math.random() * height);
         this.state.list.push(
-            <Item key={i} style={{position:'absolute',top:top}}>
+            <Item key={i} style={{position: 'absolute', top: top}}>
             </Item>
         );
         this.setState({

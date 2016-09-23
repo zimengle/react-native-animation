@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {UIManager, requireNativeComponent, View, findNodeHandle, Animated, Easing} from 'react-native';
-
+import {AnimationPropTypes} from './AnimationMixin'
 
 let AnimationView = class AnimationView extends React.Component {
 
@@ -183,45 +183,7 @@ let AnimationView = class AnimationView extends React.Component {
     }
 }
 
-AnimationView.propTypes = {
-    ...View.propTypes,
-    translate: React.PropTypes.shape({
-        from: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        }),
-        to: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        })
-    }),
-    opacity: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
-    scale: React.PropTypes.shape({
-        from: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        }),
-        to: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        })
-    }),
-    rotate: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
-    duration: React.PropTypes.number,
-    interpolator: React.PropTypes.oneOf(['linear']),
-    delay: React.PropTypes.number,
-    repeat: React.PropTypes.number,
-    onStart: React.PropTypes.func,
-    onEnd: React.PropTypes.func,
-    autoplay: React.PropTypes.bool
-
-}
+AnimationView.propTypes = AnimationPropTypes;
 
 export default AnimationView;
 

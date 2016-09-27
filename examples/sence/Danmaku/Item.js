@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text,Dimensions,PixelRatio} from 'react-native';
-// import AnimationView from '../../../src/AnimationView';
+import AnimationView from '../../../src/AnimationView';
 
 import NativeAnimationView from '../../../src/NativeAnimationView';
 export default class Item extends Component {
@@ -25,8 +25,6 @@ export default class Item extends Component {
         this.refs.view.setTranslate({from: {x: -PixelRatio.getPixelSizeForLayoutSize(width), y: 0}, to: {x: PixelRatio.getPixelSizeForLayoutSize(screenWidth), y: 0}})
 
         this.refs.view.start();
-
-
 
     }
 

@@ -1,63 +1,18 @@
 import React, {Component} from 'react';
 import {UIManager,requireNativeComponent,View,findNodeHandle} from 'react-native';
-
+import BaseAnimationView from './BaseAnimationView'
 
 const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', NativeAnimationView, {
     nativeOnly: {
         onAnimationStart: true, onAnimationEnd: true,onChange:true
     }
 });
-let NativeAnimationView = class NativeAnimationView extends React.Component {
+let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
 
     constructor(props) {
         super(props);
-        this._translate = null;
-        this._opacity = null;
-        this._scale = null;
-        this._rotate = null;
-        this._duration = null;
-        this._interpolator = null;
-        this._delay = null;
-        this._repeat = null;
-        this._autoplay = null;
-        this._isStart = false;
-    }
 
-    componentWillReceiveProps(nextProps) {
-        this._diff(this.props,nextProps);
-    }
-
-    _diff(prev,next){
-        if (next !== prev) {
-            if (prev.translate !== next.translate) {
-                this.setTranslate(next.translate);
-            }
-            if (prev.rotate !== next.rotate) {
-                this.setRotate(next.rotate);
-            }
-            if (prev.scale !== next.scale) {
-                this.setScale(next.scale);
-            }
-            if (prev.opacity !== next.opacity) {
-                this.setOpacity(next.opacity);
-            }
-            if (prev.interpolator !== next.interpolator) {
-                this.setInterpolator(next.interpolator);
-            }
-            if (prev.duration !== next.duration) {
-                this.setDuration(next.duration);
-            }
-            if (prev.delay !== next.delay) {
-                this.setDelay(next.delay);
-            }
-            if (prev.repeat !== next.repeat) {
-                this.setRepeat(next.repeat);
-            }
-            if (next.autoplay && !this._isStart) {
-                this.start();
-            }
-        }
     }
 
     _onEvent(event){
@@ -71,24 +26,14 @@ let NativeAnimationView = class NativeAnimationView extends React.Component {
                 break;
         }
     }
-    _onAnimationStart() {
-        this._isStart = true;
-        this.props.onStart && this.props.onStart();
-    }
-
-    _onAnimationEnd() {
-        console.info("_onAnimationEnd");
-        this._isStart = false;
-        this.props.onEnd && this.props.onEnd();
-    }
 
     componentDidMount() {
+        super.componentDidMount();
         this._bridge = findNodeHandle(this.refs.BaiduAnimationView);
-        this._diff({},this.props);
+
     }
 
     render() {
-        console.info("render");
         return (
             <BaiduAnimationView
                 ref={"BaiduAnimationView"}
@@ -99,9 +44,6 @@ let NativeAnimationView = class NativeAnimationView extends React.Component {
         )
     }
 
-    setDelay(delay) {
-        this._delay = delay;
-    }
 
     componentWillUnmount() {
         this.stop();
@@ -116,9 +58,7 @@ let NativeAnimationView = class NativeAnimationView extends React.Component {
         )
     }
 
-    setAutoPlay(autoplay) {
-        this._autoplay = autoplay;
-    }
+
 
     start() {
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
@@ -136,75 +76,6 @@ let NativeAnimationView = class NativeAnimationView extends React.Component {
     stop() {
         this._dispatch(UIManager.BaiduAnimationView.Commands.stop, null);
     }
-
-    setDuration(duration) {
-        this._duration = duration;
-    }
-
-    setInterpolator(interpolator) {
-        this._interpolator = interpolator;
-    }
-
-    setTranslate(translate) {
-        this._translate = translate;
-    }
-
-    setOpacity(opacity) {
-        this._opacity = opacity;
-    }
-
-    setScale(scale) {
-        this._scale = scale;
-
-    }
-
-    setRotate(rotate) {
-        this._rotate = rotate;
-    }
-
-
-    setRepeat(repeat) {
-        this._repeat = repeat;
-    }
-}
-
-NativeAnimationView.propTypes = {
-    ...View.propTypes,
-    translate: React.PropTypes.shape({
-        from: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        }),
-        to: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        })
-    }),
-    opacity: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
-    scale: React.PropTypes.shape({
-        from: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        }),
-        to: React.PropTypes.shape({
-            x: React.PropTypes.number,
-            y: React.PropTypes.number
-        })
-    }),
-    rotate: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
-    duration: React.PropTypes.number,
-    interpolator: React.PropTypes.oneOf(['linear']),
-    delay: React.PropTypes.number,
-    repeat: React.PropTypes.number,
-    onStart: React.PropTypes.func,
-    onEnd: React.PropTypes.func,
-    autoplay: React.PropTypes.bool
 
 }
 

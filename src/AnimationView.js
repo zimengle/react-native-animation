@@ -15,6 +15,7 @@ let AnimationView = class AnimationView extends BaseAnimationView {
     }
 
     render() {
+        console.info(this.state.translateY);
         return (
             <Animated.View
                 ref={"BaiduAnimationView"}
@@ -30,7 +31,9 @@ let AnimationView = class AnimationView extends BaseAnimationView {
     }
 
     start() {
+        console.info("start",this._duration);
         if (this._translate) {
+            console.info("_translate",this._translate);
             let from = this._translate.from, to = this._translate.to;
             this.state.translateY.setValue(from.y);
             this.state.translateX.setValue(from.x);

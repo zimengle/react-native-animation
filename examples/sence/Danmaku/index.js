@@ -29,7 +29,7 @@ export default class Danmaku extends Component {
             () => {
                 this.start();
             },
-            100
+            2000
         );
     }
 

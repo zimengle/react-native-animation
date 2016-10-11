@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {UIManager,requireNativeComponent,View,findNodeHandle} from 'react-native';
+import {UIManager, requireNativeComponent, View, findNodeHandle, PixelRatio} from 'react-native';
 import BaseAnimationView from './BaseAnimationView'
 
 const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', NativeAnimationView, {
     nativeOnly: {
-        onAnimationStart: true, onAnimationEnd: true,onChange:true
+        onAnimationStart: true, onAnimationEnd: true, onChange: true
     }
 });
 let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
@@ -15,9 +15,9 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     }
 
-    _onEvent(event){
+    _onEvent(event) {
 
-        switch(event.type){
+        switch (event.type) {
             case "start":
                 this._onAnimationStart();
                 break;
@@ -59,8 +59,25 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
     }
 
 
+    formatPixelSize(obj) {
+        Object.keys(obj).forEach((key)=> {
+            console.info(obj[key], typeof obj[key]);
+            if (typeof obj[key] == "number") {
+                obj[key] = PixelRatio.getPixelSizeForLayoutSize(obj[key]);
+            } else if (typeof obj[key] == "object") {
+                this.formatPixelSize(obj[key]);
+            }
+            // do something with obj
+        });
+    }
 
     start() {
+        if (this._translate) {
+            console.info("f1", this._translate);
+            this.formatPixelSize(this._translate);
+            console.info("f2", this._translate);
+        }
+
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
             rotate: this._rotate,
             translate: this._translate,

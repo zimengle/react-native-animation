@@ -13,22 +13,44 @@ export default class MyModal extends Component {
         this.setState({modalVisible: visible});
     }
 
-    start(height) {
-        let screenHeight = Dimensions.get('window').height;
+    show(height) {
 
+        let screenHeight = Dimensions.get('window').height;
+        this._offsetHeight = -(screenHeight + height);
         this.refs.view.setTranslate({
-            from: {x: 0, y: -PixelRatio.getPixelSizeForLayoutSize(screenHeight + height)},
+            from: {x: 0, y: this._offsetHeight},
             to: {x: 0, y: 0}
         });
         this.refs.view.setOpacity({
             from: 0,
             to: 1
-        })
+        });
+        this.refs.view.onStart(() => {
+            this.setState({
+                opacity: 1
+            })
+        });
 
         this.refs.view.setDuration(500);
 
         this.refs.view.start();
 
+    }
+
+    hide() {
+        console.info("hide",this._offsetHeight);
+        this.refs.view.setTranslate({
+            from: {x: 0, y: 0},
+            to: {x: 0, y: this._offsetHeight}
+        });
+        this.refs.view.setOpacity({
+            from: 1,
+            to: 0
+        });
+        this.refs.view.onEnd(() => {
+            this.setModalVisible(false);
+        });
+        this.refs.view.start();
     }
 
     renderModal() {
@@ -45,22 +67,17 @@ export default class MyModal extends Component {
                 justifyContent: 'center'
             }}>
 
-                <AnimationView ref={"view"}
-                                     onStart={()=> {
-                                         this.setState({
-                                             opacity: 1
-                                         })
-                                     }}
-                                     style={{
-                                         opacity: this.state.opacity,
-                                         backgroundColor: '#fff',
-                                         height: 200,
-                                         marginLeft: 10,
-                                         marginRight: 10
-                                     }}>
+                <NativeAnimationView ref={"view"}
+                               style={{
+                                   opacity: this.state.opacity,
+                                   backgroundColor: '#fff',
+                                   height: 200,
+                                   marginLeft: 10,
+                                   marginRight: 10
+                               }}>
 
                     <View onLayout={(event)=> {
-                        this.start(event.nativeEvent.layout.height)
+                        this.show(event.nativeEvent.layout.height)
                     }}>
                         <View style={{backgroundColor: "#f06a6a", height: 50, justifyContent: 'center'}}>
                             <Text style={{color: "#fff", marginLeft: 20}}>提示</Text>
@@ -94,7 +111,7 @@ export default class MyModal extends Component {
                                     backgroundColor: '#ee3939',
                                     alignItems: 'center'
                                 }} onPress={() => {
-
+                                    this.hide();
                                 }}>
                                     <Text style={{color: '#fff'}}>取消</Text>
                                 </TouchableHighlight>
@@ -103,7 +120,7 @@ export default class MyModal extends Component {
                         </View>
                     </View>
 
-                </AnimationView>
+                </NativeAnimationView>
             </View>;
         }
         return null;

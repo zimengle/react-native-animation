@@ -42,6 +42,18 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         this.props.onStart && this.props.onStart();
     }
 
+    onStart(callback){
+        if(callback){
+            this.props.onStart = callback;
+        }
+    }
+
+    onEnd(callback){
+        if(callback){
+            this.props.onEnd = callback;
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         this._diff(this.props,nextProps);
     }

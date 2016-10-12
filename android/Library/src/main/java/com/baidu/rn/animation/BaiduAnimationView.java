@@ -9,6 +9,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 
+import com.baidu.rn.animation.interpolator.InterpolatorFactory;
 import com.baidu.rn.animation.model.Model;
 import com.baidu.rn.animation.model.Position;
 import com.facebook.react.bridge.Arguments;
@@ -25,8 +26,6 @@ public class BaiduAnimationView extends ReactViewGroup {
         super(context);
 
     }
-
-
 
     public void start() {
 
@@ -98,11 +97,7 @@ public class BaiduAnimationView extends ReactViewGroup {
     private void add(Animation animation,Model m){
 
         animation.setDuration(m.getDuration());
-        switch (m.getInterpolator()){
-            case "linear":
-                animation.setInterpolator(new LinearInterpolator());
-                break;
-        }
+        animation.setInterpolator(InterpolatorFactory.getInterpolator(m.getInterpolator()));
         animation.setRepeatCount(m.getRepeat());
         animation.setStartOffset(m.getDelay());
         animationSet.addAnimation(animation);

@@ -23,18 +23,22 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
 
     setDuration(duration) {
         this._duration = duration;
+        return this;
     }
 
     setDelay(delay) {
         this._delay = delay;
+        return this;
     }
 
     setInterpolator(interpolator) {
         this._interpolator = interpolator;
+        return this;
     }
 
     setTranslate(translate) {
         this._translate = translate;
+        return this;
     }
 
     _onAnimationStart() {
@@ -46,12 +50,14 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         if(callback){
             this.props.onStart = callback;
         }
+        return this;
     }
 
     onEnd(callback){
         if(callback){
             this.props.onEnd = callback;
         }
+        return this;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -97,24 +103,28 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
 
     setOpacity(opacity) {
         this._opacity = opacity;
+        return this;
     }
 
     setScale(scale) {
         this._scale = scale;
-
+        return this;
     }
 
     setAutoPlay(autoplay) {
         this._autoplay = autoplay;
+        return this;
     }
 
     setRotate(rotate) {
         this._rotate = rotate;
+        return this;
     }
 
 
     setRepeat(repeat) {
         this._repeat = repeat;
+        return this;
     }
 
 
@@ -151,7 +161,11 @@ BaseAnimationView.PropTypes = {
         to: React.PropTypes.number
     }),
     duration: React.PropTypes.number,
-    interpolator: React.PropTypes.oneOf(['linear']),
+    interpolator: React.PropTypes.shape({
+        easing:React.PropTypes.oneOf(['step0', 'step1','linear','ease','quad','cubic','poly','sin','circle','exp','elastic','back','bounce']).isRequired,
+        value:React.PropTypes.number,
+        inOut:React.PropTypes.oneOf(['in','out','inOut'])
+    }),
     delay: React.PropTypes.number,
     repeat: React.PropTypes.number,
     onStart: React.PropTypes.func,

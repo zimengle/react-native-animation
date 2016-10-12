@@ -22,7 +22,7 @@ export default class Item extends Component {
     start(width) {
         let screenWidth = Dimensions.get('window').width;
 
-        this.refs.view.setTranslate({from: {x: -PixelRatio.getPixelSizeForLayoutSize(width), y: 0}, to: {x: PixelRatio.getPixelSizeForLayoutSize(screenWidth), y: 0}})
+        this.refs.view.setTranslate({from: {x: -width, y: 0}, to: {x: screenWidth, y: 0}})
 
         this.refs.view.start();
 
@@ -34,7 +34,7 @@ export default class Item extends Component {
             return null;
         }
         return (
-            <NativeAnimationView onEnd={()=> {
+            <AnimationView onEnd={()=> {
                 this.remove();
             }} onStart={()=>{
                 this.setState({
@@ -44,7 +44,7 @@ export default class Item extends Component {
                 <Text onLayout={(event)=> {
                     this.start(event.nativeEvent.layout.width)
                 }}>帅气啊</Text>
-            </NativeAnimationView>
+            </AnimationView>
         );
     }
 }

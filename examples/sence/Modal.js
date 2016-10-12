@@ -20,20 +20,16 @@ export default class MyModal extends Component {
         this.refs.view.setTranslate({
             from: {x: 0, y: this._offsetHeight},
             to: {x: 0, y: 0}
-        });
-        this.refs.view.setOpacity({
+        }).setOpacity({
             from: 0,
             to: 1
-        });
-        this.refs.view.onStart(() => {
+        }).onStart(() => {
             this.setState({
                 opacity: 1
             })
-        });
-
-        this.refs.view.setDuration(500);
-
-        this.refs.view.start();
+        }).setInterpolator({
+            easing:"bounce"
+        }).setDuration(10000).start();
 
     }
 
@@ -42,15 +38,12 @@ export default class MyModal extends Component {
         this.refs.view.setTranslate({
             from: {x: 0, y: 0},
             to: {x: 0, y: this._offsetHeight}
-        });
-        this.refs.view.setOpacity({
+        }).setOpacity({
             from: 1,
             to: 0
-        });
-        this.refs.view.onEnd(() => {
+        }).onEnd(() => {
             this.setModalVisible(false);
-        });
-        this.refs.view.start();
+        }).start();
     }
 
     renderModal() {

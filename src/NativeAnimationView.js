@@ -73,9 +73,9 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     start() {
         if (this._translate) {
-            console.info("f1", this._translate);
-            this.formatPixelSize(this._translate);
-            console.info("f2", this._translate);
+            // console.info("f1", this._translate);
+            // this.formatPixelSize(this._translate);
+            // console.info("f2", this._translate);
         }
 
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
@@ -84,7 +84,7 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             scale: this._scale,
             opacity: this._opacity,
             duration: this._duration || 200,
-            interpolator: this._interpolator || 'linear',
+            interpolator: ""+JSON.stringify(this._interpolator),
             delay: this._delay || 0,
             repeat: this._repeat || 0
         }]);

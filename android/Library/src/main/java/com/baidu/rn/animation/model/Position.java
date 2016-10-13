@@ -2,10 +2,10 @@ package com.baidu.rn.animation.model;
 
 
 public class Position {
-    private float x;
-    private float y;
+    private Float x;
+    private Float y;
 
-    public float getX() {
+    public Float getX() {
         return x;
     }
 
@@ -13,7 +13,7 @@ public class Position {
         this.x = x;
     }
 
-    public float getY() {
+    public Float getY() {
         return y;
     }
 

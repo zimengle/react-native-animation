@@ -14,7 +14,7 @@ public class Model {
 
     private Range rotate;
 
-    private Range scale;
+    private PositionRange scale;
 
     private Range opacity;
 
@@ -26,6 +26,8 @@ public class Model {
 
     private int repeat;
 
+    private boolean interrupt = true;
+
     public PositionRange getTranslate() {
         return translate;
     }
@@ -34,7 +36,7 @@ public class Model {
         return rotate;
     }
 
-    public Range getScale() {
+    public PositionRange getScale() {
         return scale;
     }
 
@@ -56,5 +58,9 @@ public class Model {
 
     public int getRepeat() {
         return repeat;
+    }
+
+    public boolean isInterrupt() {
+        return interrupt;
     }
 }

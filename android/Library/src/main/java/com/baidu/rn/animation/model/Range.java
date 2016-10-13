@@ -2,10 +2,10 @@ package com.baidu.rn.animation.model;
 
 
 public class Range {
-    private float from;
-    private float to;
+    private Float from;
+    private Float to;
 
-    public float getFrom() {
+    public Float getFrom() {
         return from;
     }
 
@@ -13,7 +13,7 @@ public class Range {
         this.from = from;
     }
 
-    public float getTo() {
+    public Float getTo() {
         return to;
     }
 

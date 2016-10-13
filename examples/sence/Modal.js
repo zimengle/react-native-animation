@@ -16,26 +16,32 @@ export default class MyModal extends Component {
     show(height) {
 
         let screenHeight = Dimensions.get('window').height;
-        this._offsetHeight = -(screenHeight + height);
-        this.refs.view.setTranslate({
+        this._offsetHeight = -(screenHeight/2 + height);
+        //181 640
+        console.info("height",height,"screenHeight",screenHeight);
+
+        this.refs.view.clearAnimation().setTranslate({
             from: {x: 0, y: this._offsetHeight},
             to: {x: 0, y: 0}
         }).setOpacity({
             from: 0,
             to: 1
+        }).setScale({
+            from: {x: 0, y: 0},
+            to: {x: 1, y: 1}
         }).onStart(() => {
             this.setState({
                 opacity: 1
             })
         }).setInterpolator({
-            easing:"bounce"
+            easing: "bounce"
         }).setDuration(10000).start();
 
     }
 
     hide() {
-        console.info("hide",this._offsetHeight);
-        this.refs.view.setTranslate({
+
+        this.refs.view.clearAnimation().setTranslate({
             from: {x: 0, y: 0},
             to: {x: 0, y: this._offsetHeight}
         }).setOpacity({
@@ -61,13 +67,13 @@ export default class MyModal extends Component {
             }}>
 
                 <NativeAnimationView ref={"view"}
-                               style={{
-                                   opacity: this.state.opacity,
-                                   backgroundColor: '#fff',
-                                   height: 200,
-                                   marginLeft: 10,
-                                   marginRight: 10
-                               }}>
+                                     style={{
+                                         opacity: this.state.opacity,
+                                         backgroundColor: '#fff',
+                                         height: 200,
+                                         marginLeft: 10,
+                                         marginRight: 10
+                                     }}>
 
                     <View onLayout={(event)=> {
                         this.show(event.nativeEvent.layout.height)

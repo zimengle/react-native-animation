@@ -41,6 +41,14 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         return this;
     }
 
+    clearAnimation(){
+        this._translate = null;
+        this._opacity = null;
+        this._scale = null;
+        this._rotate = null;
+        return this;
+    }
+
     _onAnimationStart() {
         this._isStart = true;
         this.props.onStart && this.props.onStart();

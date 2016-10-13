@@ -43,7 +43,7 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
                 }
                 String data = args.toString();
                 data = data.substring(1,data.length()-1);
-                root.initAnimation(GSON.fromJson(data, Model.class));
+                root.startAnimation(GSON.fromJson(data, Model.class));
                 root.start();
                 break;
             }

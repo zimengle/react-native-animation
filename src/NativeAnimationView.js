@@ -73,9 +73,9 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     start() {
         if (this._translate) {
-            // console.info("f1", this._translate);
-            // this.formatPixelSize(this._translate);
-            // console.info("f2", this._translate);
+            console.info("f1", this._translate);
+            this.formatPixelSize(this._translate);
+            console.info("f2", this._translate);
         }
 
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{

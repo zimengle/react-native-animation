@@ -175,7 +175,6 @@ BaseAnimationView.PropTypes = {
         inOut:React.PropTypes.oneOf(['in','out','inOut'])
     }),
     delay: React.PropTypes.number,
-    repeat: React.PropTypes.number,
     onStart: React.PropTypes.func,
     onEnd: React.PropTypes.func,
     autoplay: React.PropTypes.bool

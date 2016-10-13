@@ -43,11 +43,6 @@ public class BaiduAnimationView extends ReactViewGroup {
 
     public void startAnimation(Model model) {
 
-        /*if (model.isInterrupt()) {
-            stop();
-            animate().cancel();
-        }*/
-
         if (model.getOpacity() != null) {
             Float from = model.getOpacity().getFrom();
             Float to = model.getOpacity().getTo();

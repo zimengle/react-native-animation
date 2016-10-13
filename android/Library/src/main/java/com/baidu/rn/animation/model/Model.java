@@ -24,10 +24,6 @@ public class Model {
 
     private long delay;
 
-    private int repeat;
-
-    private boolean interrupt = true;
-
     public PositionRange getTranslate() {
         return translate;
     }
@@ -56,11 +52,5 @@ public class Model {
         return delay;
     }
 
-    public int getRepeat() {
-        return repeat;
-    }
 
-    public boolean isInterrupt() {
-        return interrupt;
-    }
 }

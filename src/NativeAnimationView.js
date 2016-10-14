@@ -67,13 +67,20 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             } else if (typeof obj[key] == "object") {
                 this.formatPixelSize(obj[key]);
             }
-            // do something with obj
         });
     }
 
     start() {
         if (this._translate) {
             this.formatPixelSize(this._translate);
+        }
+
+        if (this._width){
+            this.formatPixelSize(this._width);
+        }
+
+        if (this._height){
+            this.formatPixelSize(this._height);
         }
 
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
@@ -84,7 +91,9 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             duration: this._duration || 200,
             interpolator: ""+JSON.stringify(this._interpolator),
             delay: this._delay || 0,
-            repeat: this._repeat || 0
+            repeat: this._repeat || 0,
+            width: this._width,
+            height : this._height
         }]);
     }
 

@@ -11,6 +11,10 @@ public class Model {
 
     private Range opacity;
 
+    private Range height;
+
+    private Range width;
+
     private long duration;
 
     private String interpolator;
@@ -45,5 +49,11 @@ public class Model {
         return delay;
     }
 
+    public Range getHeight() {
+        return height;
+    }
 
+    public Range getWidth() {
+        return width;
+    }
 }

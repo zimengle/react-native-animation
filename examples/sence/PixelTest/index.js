@@ -41,9 +41,9 @@ export default class PixelTest extends Component {
             }}>
                 <Text>点我</Text>
             </TouchableHighlight>
-            <AnimationView ref="view">
+            <NativeAnimationView ref="view">
                 <Text>动起来</Text>
-            </AnimationView>
+            </NativeAnimationView>
         </View>);
 
     }

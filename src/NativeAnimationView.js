@@ -4,7 +4,7 @@ import BaseAnimationView from './BaseAnimationView'
 
 const BaiduAnimationView = requireNativeComponent('BaiduAnimationView', NativeAnimationView, {
     nativeOnly: {
-        onAnimationStart: true, onAnimationEnd: true, onChange: true
+        onAnimationStart: true, onAnimationEnd: true, onAnimationChange: true
     }
 });
 let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
@@ -38,7 +38,7 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             <BaiduAnimationView
                 ref={"BaiduAnimationView"}
                 style={this.props.style}
-                onChange={this._onEvent.bind(this)}>
+                onAnimationChange={this._onEvent.bind(this)}>
                 {this.props.children}
             </BaiduAnimationView>
         )
@@ -73,9 +73,7 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     start() {
         if (this._translate) {
-            console.info("f1", this._translate);
             this.formatPixelSize(this._translate);
-            console.info("f2", this._translate);
         }
 
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{

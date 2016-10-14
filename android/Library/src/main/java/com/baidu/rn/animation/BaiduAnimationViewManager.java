@@ -31,7 +31,6 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
     }
 
 
-
     @Override
     public void receiveCommand(BaiduAnimationView root, int commandId, @Nullable ReadableArray args) {
 
@@ -42,7 +41,7 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
                             "Illegal number of arguments for 'COMMAND_START' command");
                 }
                 String data = args.toString();
-                data = data.substring(1,data.length()-1);
+                data = data.substring(1, data.length() - 1);
                 root.startAnimation(GSON.fromJson(data, Model.class));
                 root.start();
                 break;
@@ -63,5 +62,12 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
     @Override
     protected BaiduAnimationView createViewInstance(ThemedReactContext context) {
         return new BaiduAnimationView(context);
+    }
+
+    @Nullable
+    @Override
+    public Map getExportedCustomDirectEventTypeConstants() {
+        return MapBuilder.of(
+                AnimationChangeEvent.EVENT_NAME, MapBuilder.of("registrationName", "onAnimationChange"));
     }
 }

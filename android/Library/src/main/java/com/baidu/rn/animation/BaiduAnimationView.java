@@ -1,6 +1,7 @@
 package com.baidu.rn.animation;
 import android.animation.Animator;
 import android.content.Context;
+import android.os.SystemClock;
 import android.view.animation.AnimationSet;
 import com.baidu.rn.animation.interpolator.InterpolatorFactory;
 import com.baidu.rn.animation.model.Model;
@@ -8,12 +9,13 @@ import com.baidu.rn.animation.model.Position;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.views.view.ReactViewGroup;
 
 
 public class BaiduAnimationView extends ReactViewGroup {
-    private AnimationSet animationSet;
 
     public BaiduAnimationView(Context context) {
         super(context);
@@ -26,13 +28,9 @@ public class BaiduAnimationView extends ReactViewGroup {
     }
 
     private void dispatchEvent(String type) {
-        WritableMap event = Arguments.createMap();
-        event.putString("type", type);
         ReactContext reactContext = (ReactContext) getContext();
-        reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                getId(),
-                "topChange",
-                event);
+        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new AnimationChangeEvent(getId(), SystemClock.uptimeMillis(),type));
+
     }
 
     public void stop() {
@@ -159,4 +157,6 @@ public class BaiduAnimationView extends ReactViewGroup {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         // No-op since UIManagerModule handles actually laying out children.
     }
+
+
 }

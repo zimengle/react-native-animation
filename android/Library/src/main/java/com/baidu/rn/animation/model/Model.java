@@ -1,13 +1,6 @@
 package com.baidu.rn.animation.model;
 
-/**
- rotate: this._rotate,
- translate: this._translate,
- scale: this._scale,
- opacity: this._opacity,
- duration: this._duration || 200,
- interpolator: this._interpolator || 'linear'
- */
+
 public class Model {
 
     private PositionRange translate;

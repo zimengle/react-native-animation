@@ -35,13 +35,13 @@ export default class PixelTest extends Component {
 
     render() {
 
-        return (<View style={{flexDirection: 'row'}}>
+        return (<View style={{flexDirection: 'row',marginTop:20}}>
             <TouchableHighlight onPress={() => {
                 this.start();
             }}>
                 <Text>点我</Text>
             </TouchableHighlight>
-            <NativeAnimationView ref="view">
+            <NativeAnimationView style={{backgroundColor:'#ff0000'}} ref="view">
                 <Text>动起来</Text>
             </NativeAnimationView>
         </View>);

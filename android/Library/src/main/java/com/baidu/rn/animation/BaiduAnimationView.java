@@ -3,12 +3,8 @@ package com.baidu.rn.animation;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.SystemClock;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.baidu.rn.animation.interpolator.InterpolatorFactory;
 import com.baidu.rn.animation.model.Model;
 import com.baidu.rn.animation.model.Position;
@@ -48,41 +44,6 @@ public class BaiduAnimationView extends ReactViewGroup {
 
         List<Animator> list = new ArrayList<>();
 
-        if (model.getWidth() != null) {
-            Float from = model.getWidth().getFrom(), to = model.getWidth().getTo();
-            if(from != null){
-                setWidth(Math.round(from));
-            }
-            if(to != null){
-                ValueAnimator anim = ValueAnimator.ofInt(this.getMeasuredWidth(), Math.round(to));
-                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        setWidth((Integer) valueAnimator.getAnimatedValue());
-                    }
-                });
-                list.add(anim);
-            }
-
-        }
-
-        if (model.getHeight() != null) {
-            Float from = model.getHeight().getFrom(), to = model.getHeight().getTo();
-            if(from != null){
-                setHeight(Math.round(from));
-            }
-            if(to != null){
-                ValueAnimator anim = ValueAnimator.ofInt(this.getMeasuredHeight(), Math.round(to));
-                anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                        setHeight((Integer) valueAnimator.getAnimatedValue());
-                    }
-                });
-                list.add(anim);
-            }
-
-        }
 
         if (model.getOpacity() != null) {
             Float from = model.getOpacity().getFrom();
@@ -208,18 +169,6 @@ public class BaiduAnimationView extends ReactViewGroup {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         // No-op since UIManagerModule handles actually laying out children.
-    }
-
-    public void setHeight(int height) {
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        layoutParams.height = height;
-        setLayoutParams(layoutParams);
-    }
-
-    public void setWidth(int width) {
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        layoutParams.width = width;
-        setLayoutParams(layoutParams);
     }
 
 

@@ -61,7 +61,6 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     formatPixelSize(obj) {
         Object.keys(obj).forEach((key)=> {
-            console.info(obj[key], typeof obj[key]);
             if (typeof obj[key] == "number") {
                 obj[key] = PixelRatio.getPixelSizeForLayoutSize(obj[key]);
             } else if (typeof obj[key] == "object") {
@@ -75,14 +74,6 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             this.formatPixelSize(this._translate);
         }
 
-        if (this._width){
-            this.formatPixelSize(this._width);
-        }
-
-        if (this._height){
-            this.formatPixelSize(this._height);
-        }
-
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
             rotate: this._rotate,
             translate: this._translate,
@@ -92,8 +83,7 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             interpolator: ""+JSON.stringify(this._interpolator),
             delay: this._delay || 0,
             repeat: this._repeat || 0,
-            width: this._width,
-            height : this._height
+            backgroundColor:this._backgroundColor
         }]);
     }
 

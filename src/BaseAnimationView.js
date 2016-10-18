@@ -15,8 +15,6 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         this._repeat = null;
         this._autoplay = null;
         this._isStart = false;
-        this._width = null;
-        this._height = null;
     }
 
     componentDidMount() {
@@ -48,8 +46,6 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         this._opacity = null;
         this._scale = null;
         this._rotate = null;
-        this._width = null;
-        this._height = null;
         return this;
     }
 
@@ -113,16 +109,6 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         }
     }
 
-    setWidth(width){
-        this._width = width;
-        return this;
-    }
-
-    setHeight(height){
-        this._height = height;
-        return this;
-    }
-
     setOpacity(opacity) {
         this._opacity = opacity;
         return this;
@@ -154,14 +140,6 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
 
 BaseAnimationView.PropTypes = {
     ...View.propTypes,
-    width: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
-    height: React.PropTypes.shape({
-        from: React.PropTypes.number,
-        to: React.PropTypes.number
-    }),
     translate: React.PropTypes.shape({
         from: React.PropTypes.shape({
             x: React.PropTypes.number,
@@ -189,6 +167,10 @@ BaseAnimationView.PropTypes = {
     rotate: React.PropTypes.shape({
         from: React.PropTypes.number,
         to: React.PropTypes.number
+    }),
+    backgroundColor: React.PropTypes.shape({
+        from: React.PropTypes.string,
+        to: React.PropTypes.string
     }),
     duration: React.PropTypes.number,
     interpolator: React.PropTypes.shape({

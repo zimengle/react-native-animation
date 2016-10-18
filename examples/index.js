@@ -3,13 +3,15 @@ import {Text, Navigator,TouchableHighlight} from 'react-native';
 import Modal from './sence/Modal';
 import Danmaku from './sence/Danmaku';
 import Home from './sence/Home';
+import PixelTest from './sence/PixelTest';
 
 export default class Index extends Component {
     render() {
         const routes = [
             {name: 'Home'},
             {name: 'Modal'},
-            {name: 'Danmaku'}
+            {name: 'Danmaku'},
+            {name: 'PixelTest'}
         ];
         return (
             <Navigator
@@ -28,6 +30,10 @@ export default class Index extends Component {
                         case "Danmaku":
                             Sence = Danmaku;
                             break;
+                        case "PixelTest":
+                            Sence = PixelTest;
+                            break;
+
                     }
 
                     if(Sence){

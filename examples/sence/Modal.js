@@ -24,10 +24,8 @@ export default class MyModal extends Component {
             from: {x: 0, y: this._offsetHeight},
             to: {x: 0, y: 0}
         }).setOpacity({
-            from: 0,
             to: 1
         }).setScale({
-            from: {x: 0, y: 0},
             to: {x: 1, y: 1}
         }).onStart(() => {
             this.setState({
@@ -45,7 +43,6 @@ export default class MyModal extends Component {
             from: {x: 0, y: 0},
             to: {x: 0, y: this._offsetHeight}
         }).setOpacity({
-            from: 1,
             to: 0
         }).onEnd(() => {
             this.setModalVisible(false);

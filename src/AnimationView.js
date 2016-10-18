@@ -96,7 +96,6 @@ let AnimationView = class AnimationView extends BaseAnimationView {
                     arr.push(Animated.timing(this.state.translateX, this._value(to.x)));
                 }
             }
-            console.info(from,to);
 
         }
 

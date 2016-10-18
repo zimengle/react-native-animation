@@ -6,11 +6,13 @@ export default class Home extends Component {
         return (
             <View>
                 <TouchableHighlight onPress={()=> this.props.navigator.push({name: "Modal"})}>
-                    <Text>Modal</Text>
+                    <Text>窗口动画</Text>
                 </TouchableHighlight>
-
                 <TouchableHighlight onPress={() => this.props.navigator.push({name: "Danmaku"})}>
-                    <Text>Danmaku</Text>
+                    <Text>弹幕</Text>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.navigator.push({name: "PixelTest"})}>
+                    <Text>连续点击动画</Text>
                 </TouchableHighlight>
             </View>
 

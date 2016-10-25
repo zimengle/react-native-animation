@@ -1,6 +1,9 @@
 package com.baidu.rn.animation.model;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Model {
 
     private PositionRange translate;
@@ -45,4 +48,38 @@ public class Model {
         return delay;
     }
 
+
+    public Model() {
+    }
+    public Model(JSONObject object) throws JSONException {
+
+        if(Utils.has(object,"translate")){
+            translate = new PositionRange(object.getJSONObject("translate"));
+        }
+        if(Utils.has(object,"rotate")){
+
+            rotate = new Range(object.getJSONObject("rotate"));
+        }
+        if(Utils.has(object,"scale")){
+            scale = new PositionRange(object.getJSONObject("scale"));
+        }
+
+        if(Utils.has(object,"opacity")){
+            opacity = new Range(object.getJSONObject("opacity"));
+        }
+
+        if(Utils.has(object,"duration")){
+            duration = object.getLong("duration");
+        }
+        if(Utils.has(object,"interpolator")){
+            interpolator = object.getString("interpolator");
+        }
+
+        if(Utils.has(object,"delay")){
+            delay = object.getLong("delay");
+        }
+
+
+
+    }
 }

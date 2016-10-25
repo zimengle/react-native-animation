@@ -21,7 +21,7 @@ public class InterpolatorFactory {
     public static Interpolator getInterpolator(String str){
         Interpolator interpolator = null;
         try {
-            if(str != null){
+            if(str != null && !"null".equals(str)){
                 JSONObject object = new JSONObject(str);
                 String easing = object.getString("easing");
                 Double value = null;

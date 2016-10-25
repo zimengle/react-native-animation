@@ -26,6 +26,7 @@ export default class MyModal extends Component {
         }).setOpacity({
             to: 1
         }).setScale({
+            from:{x:0,y:0},
             to: {x: 1, y: 1}
         }).onStart(() => {
             this.setState({
@@ -44,6 +45,9 @@ export default class MyModal extends Component {
             to: {x: 0, y: this._offsetHeight}
         }).setOpacity({
             to: 0
+        }).setScale({
+           /* from:{x:1,y:1},*/
+            to: {x: 0, y: 0}
         }).onEnd(() => {
             this.setModalVisible(false);
         }).start();
@@ -63,7 +67,7 @@ export default class MyModal extends Component {
                 justifyContent: 'center'
             }}>
 
-                <NativeAnimationView ref={"view"}
+                <AnimationView ref={"view"}
                                      style={{
                                          opacity: this.state.opacity,
                                          backgroundColor: '#fff',
@@ -116,7 +120,7 @@ export default class MyModal extends Component {
                         </View>
                     </View>
 
-                </NativeAnimationView>
+                </AnimationView>
             </View>;
         }
         return null;

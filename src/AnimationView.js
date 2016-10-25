@@ -115,6 +115,7 @@ let AnimationView = class AnimationView extends BaseAnimationView {
         if (this._scale) {
             let from = this._scale.from, to = this._scale.to;
             if(from){
+                console.info("from",from);
                 if(!isUndefined(from.y)){
                     this.state.scaleY.setValue(from.y);
                 }
@@ -124,11 +125,12 @@ let AnimationView = class AnimationView extends BaseAnimationView {
             }
 
             if(to){
+                console.info("to",to);
                 if(!isUndefined(to.y)){
-                    Animated.timing(this.state.scaleY, this._value(to.y));
+                    arr.push(Animated.timing(this.state.scaleY, this._value(to.y)));
                 }
                 if(!isUndefined(to.x)){
-                    Animated.timing(this.state.scaleX, this._value(to.x));
+                    arr.push(Animated.timing(this.state.scaleX, this._value(to.x)));
                 }
             }
         }

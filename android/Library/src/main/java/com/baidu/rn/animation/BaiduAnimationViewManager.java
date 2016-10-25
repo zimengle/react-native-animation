@@ -6,7 +6,9 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
-import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -18,8 +20,6 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
     public static final int COMMAND_STOP = 2;
 
     public static final String REACT_CLASS = "BaiduAnimationView";
-
-    public static final Gson GSON = new Gson();
 
     @Override
     public Map<String, Integer> getCommandsMap() {
@@ -42,7 +42,11 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
                 }
                 String data = args.toString();
                 data = data.substring(1, data.length() - 1);
-                root.startAnimation(GSON.fromJson(data, Model.class));
+                try {
+                    root.startAnimation(new Model(new JSONObject(data)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
             case COMMAND_STOP: {

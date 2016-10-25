@@ -10,4 +10,4 @@ import MyModal  from './examples/sence/Modal'
 import PixelTest  from './examples/sence/PixelTest'
 
 
-AppRegistry.registerComponent('AwesomeProject2', () => Index);
+AppRegistry.registerComponent('AwesomeProject2', () => MyModal);

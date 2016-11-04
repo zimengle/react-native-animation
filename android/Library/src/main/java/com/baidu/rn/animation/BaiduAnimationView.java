@@ -4,8 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.os.SystemClock;
 import com.baidu.rn.animation.interpolator.InterpolatorFactory;
+import com.baidu.rn.animation.model.DefaultModel;
 import com.baidu.rn.animation.model.Model;
 import com.baidu.rn.animation.model.Position;
 import com.facebook.react.bridge.ReactContext;
@@ -28,7 +28,7 @@ public class BaiduAnimationView extends ReactViewGroup {
 
     private void dispatchEvent(String type) {
         ReactContext reactContext = (ReactContext) getContext();
-        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new AnimationChangeEvent(getId(), SystemClock.uptimeMillis(), type));
+        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new AnimationChangeEvent(getId(), type));
 
     }
 
@@ -38,8 +38,38 @@ public class BaiduAnimationView extends ReactViewGroup {
         }
     }
 
+    public void setDefault(DefaultModel model){
+        if(model.getTranslate() != null){
+            Position translate = model.getTranslate();
+            if(translate.getX() != null){
+                setTranslationX(translate.getX());
+            }
+            if(translate.getY() != null){
+                setTranslationY(translate.getY());
+            }
+        }
+        if(model.getOpacity() != null){
+            setAlpha(model.getOpacity());
+        }
+        if(model.getRotate() != null){
+            setRotation(model.getRotate());
+        }
+        if(model.getScale() != null){
+            Position scale = model.getScale();
+            if(scale.getX() != null){
+                setScaleX(scale.getX());
+            }
+            if(scale.getY() != null){
+                setScaleY(scale.getY());
+            }
+        }
+    }
+
 
     public void startAnimation(Model model) {
+        if(animatorSet != null){
+            animatorSet.removeAllListeners();
+        }
 
 
         List<Animator> list = new ArrayList<>();

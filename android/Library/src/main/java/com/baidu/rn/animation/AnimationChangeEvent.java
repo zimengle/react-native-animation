@@ -16,8 +16,8 @@ public class AnimationChangeEvent extends Event<AnimationChangeEvent> {
 
     private String type;
 
-    public AnimationChangeEvent(int viewTag, long timestampMs, String type) {
-        super(viewTag, timestampMs);
+    public AnimationChangeEvent(int viewTag, String type) {
+        super(viewTag);
         this.type = type;
     }
 

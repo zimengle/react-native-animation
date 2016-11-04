@@ -1,5 +1,6 @@
 package com.baidu.rn.animation;
 
+import com.baidu.rn.animation.model.DefaultModel;
 import com.baidu.rn.animation.model.Model;
 import com.facebook.react.bridge.JSApplicationIllegalArgumentException;
 import com.facebook.react.bridge.ReadableArray;
@@ -18,6 +19,7 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
 
     public static final int COMMAND_START = 1;
     public static final int COMMAND_STOP = 2;
+    public static final int COMMAND_DEFAULT = 3;
 
     public static final String REACT_CLASS = "BaiduAnimationView";
 
@@ -27,7 +29,10 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
                 "start",
                 COMMAND_START,
                 "stop",
-                COMMAND_STOP);
+                COMMAND_STOP,
+                "default",
+                COMMAND_DEFAULT
+        );
     }
 
 
@@ -51,6 +56,19 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
             }
             case COMMAND_STOP: {
                 root.stop();
+                break;
+            }
+            case COMMAND_DEFAULT: {
+                if (args == null || args.size() == 0) {
+                    return;
+                }
+                String data = args.toString();
+                data = data.substring(1, data.length() - 1);
+                try {
+                    root.setDefault(new DefaultModel(new JSONObject(data)));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 break;
             }
         }

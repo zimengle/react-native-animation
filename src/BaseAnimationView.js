@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {UIManager, requireNativeComponent, View, findNodeHandle, Animated, Easing} from 'react-native';
+import React, { Component } from 'react';
+import { UIManager, requireNativeComponent, View, findNodeHandle, Animated, Easing } from 'react-native';
 
 let BaseAnimationView = class BaseAnimationView extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this._translate = null;
         this._opacity = null;
         this._scale = null;
@@ -15,10 +15,19 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         this._repeat = null;
         this._autoplay = null;
         this._isStart = false;
+        this._defaults = {
+            rotate: 0,
+            translateX: 0,
+            translateY: 0,
+            opacity: 1,
+            scaleX: 1,
+            scaleY: 1
+        };
+        Object.assign(this._defaults, props.defaults);
     }
 
     componentDidMount() {
-        this._diff({},this.props);
+        this._diff({}, this.props);
     }
 
     setDuration(duration) {
@@ -41,7 +50,7 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         return this;
     }
 
-    clearAnimation(){
+    clearAnimation() {
         this._translate = null;
         this._opacity = null;
         this._scale = null;
@@ -54,22 +63,22 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
         this.props.onStart && this.props.onStart();
     }
 
-    onStart(callback){
-        if(callback){
+    onStart(callback) {
+        if (callback) {
             this.props.onStart = callback;
         }
         return this;
     }
 
-    onEnd(callback){
-        if(callback){
+    onEnd(callback) {
+        if (callback) {
             this.props.onEnd = callback;
         }
         return this;
     }
 
     componentWillReceiveProps(nextProps) {
-        this._diff(this.props,nextProps);
+        this._diff(this.props, nextProps);
     }
 
     _onAnimationEnd() {
@@ -140,6 +149,13 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
 
 BaseAnimationView.PropTypes = {
     ...View.propTypes,
+    defaults: React.PropTypes.shape({
+        translateX: React.PropTypes.number,
+        translateY: React.PropTypes.number,
+        opacity: React.PropTypes.number,
+        scaleX: React.PropTypes.number,
+        scaleY: React.PropTypes.number
+    }),
     translate: React.PropTypes.shape({
         from: React.PropTypes.shape({
             x: React.PropTypes.number,
@@ -174,9 +190,9 @@ BaseAnimationView.PropTypes = {
     }),
     duration: React.PropTypes.number,
     interpolator: React.PropTypes.shape({
-        easing:React.PropTypes.oneOf(['step0', 'step1','linear','ease','quad','cubic','poly','sin','circle','exp','elastic','back','bounce']).isRequired,
-        value:React.PropTypes.number,
-        inOut:React.PropTypes.oneOf(['in','out','inOut'])
+        easing: React.PropTypes.oneOf(['step0', 'step1', 'linear', 'ease', 'quad', 'cubic', 'poly', 'sin', 'circle', 'exp', 'elastic', 'back', 'bounce']).isRequired,
+        value: React.PropTypes.number,
+        inOut: React.PropTypes.oneOf(['in', 'out', 'inOut'])
     }),
     delay: React.PropTypes.number,
     onStart: React.PropTypes.func,

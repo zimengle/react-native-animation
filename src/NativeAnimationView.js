@@ -30,7 +30,19 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
     componentDidMount() {
         super.componentDidMount();
         this._bridge = findNodeHandle(this.refs.BaiduAnimationView);
-
+        const defaults = this._defaults;
+        this._dispatch(UIManager.BaiduAnimationView.Commands['default'], [{
+            rotate: defaults.rotate,
+            translate: {
+                x: PixelRatio.getPixelSizeForLayoutSize(defaults.translateX),
+                y: PixelRatio.getPixelSizeForLayoutSize(defaults.translateY)
+            },
+            scale: {
+                x: defaults.scaleX,
+                y: defaults.scaleY
+            },
+            opacity: defaults.opacity
+        }]);
     }
 
     render() {
@@ -82,8 +94,7 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
             duration: this._duration || 200,
             interpolator: ""+JSON.stringify(this._interpolator),
             delay: this._delay || 0,
-            repeat: this._repeat || 0,
-            backgroundColor:this._backgroundColor
+            repeat: this._repeat || 0
         }]);
     }
 
@@ -94,5 +105,3 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 }
 
 export default NativeAnimationView;
-
-

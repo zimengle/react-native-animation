@@ -9,12 +9,12 @@ let AnimationView = class AnimationView extends BaseAnimationView {
         super(props);
         this._animations = null;
         this.state = {
-            translateX: new Animated.Value(0),
-            translateY: new Animated.Value(0),
-            opacity: new Animated.Value(1),
-            scaleX: new Animated.Value(1),
-            scaleY: new Animated.Value(1)
-        }
+            translateX: new Animated.Value(this._defaults.translateX),
+            translateY: new Animated.Value(this._defaults.translateY),
+            opacity: new Animated.Value(this._defaults.opacity),
+            scaleX: new Animated.Value(this._defaults.scaleX),
+            scaleY: new Animated.Value(this._defaults.scaleY)
+        };
     }
 
     render() {
@@ -26,13 +26,12 @@ let AnimationView = class AnimationView extends BaseAnimationView {
                         translateY: this.state.translateY
                     }, {
                         translateX: this.state.translateX
-                    },{
+                    }, {
                         scaleX: this.state.scaleX
-                    },{
+                    }, {
                         scaleY: this.state.scaleY
                     }],
-                    opacity: this.state.opacity,
-
+                    opacity: this.state.opacity
                 }]}>
                 {this.props.children}
             </Animated.View>
@@ -158,5 +157,3 @@ let AnimationView = class AnimationView extends BaseAnimationView {
 }
 
 export default AnimationView;
-
-

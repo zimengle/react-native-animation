@@ -87,8 +87,9 @@ public class BaiduAnimationViewManager extends ViewGroupManager<BaiduAnimationVi
 
     @Nullable
     @Override
-    public Map getExportedCustomDirectEventTypeConstants() {
-        return MapBuilder.of(
-                AnimationChangeEvent.EVENT_NAME, MapBuilder.of("registrationName", "onAnimationChange"));
+    public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
+        return MapBuilder.<String, Object>builder()
+                .put(AnimationChangeEvent.EVENT_NAME, MapBuilder.of("registrationName", "onAnimationChange"))
+                .build();
     }
 }

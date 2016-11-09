@@ -26,9 +26,9 @@ public class BaiduAnimationView extends ReactViewGroup {
     }
 
 
-    private void dispatchEvent(String type) {
+    private void dispatchEvent(String id,String type) {
         ReactContext reactContext = (ReactContext) getContext();
-        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new AnimationChangeEvent(getId(), type));
+        reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(new AnimationChangeEvent(getId(),id, type));
 
     }
 
@@ -66,7 +66,7 @@ public class BaiduAnimationView extends ReactViewGroup {
     }
 
 
-    public void startAnimation(Model model) {
+    public void startAnimation(final Model model) {
         if(animatorSet != null){
             animatorSet.removeAllListeners();
         }
@@ -169,22 +169,22 @@ public class BaiduAnimationView extends ReactViewGroup {
 
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    dispatchEvent("start");
+                    dispatchEvent(model.getAnimId(),"start");
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    dispatchEvent("end");
+                    dispatchEvent(model.getAnimId(),"end");
                 }
 
                 @Override
                 public void onAnimationCancel(Animator animation) {
-                    dispatchEvent("cancel");
+                    dispatchEvent(model.getAnimId(),"cancel");
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animation) {
-                    dispatchEvent("repeat");
+                    dispatchEvent(model.getAnimId(),"repeat");
                 }
             });
 

@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 public class Model {
 
+    private String animId;
+
     private PositionRange translate;
 
     private Range rotate;
@@ -53,6 +55,10 @@ public class Model {
     }
     public Model(JSONObject object) throws JSONException {
 
+        if(Utils.has(object,"animId")){
+            animId = object.getString("animId");
+        }
+
         if(Utils.has(object,"translate")){
             translate = new PositionRange(object.getJSONObject("translate"));
         }
@@ -81,5 +87,9 @@ public class Model {
 
 
 
+    }
+
+    public String getAnimId() {
+        return animId;
     }
 }

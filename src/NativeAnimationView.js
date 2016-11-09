@@ -12,17 +12,19 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
 
     constructor(props) {
         super(props);
-
+        this._animId = null;
     }
 
     _onEvent(event) {
-
-        switch (event.type) {
+        let {type, animId} = event.nativeEvent;
+        switch (type) {
             case "start":
                 this._onAnimationStart();
                 break;
             case "end":
-                this._onAnimationEnd();
+                if (parseInt(animId, 10) === this._animId) {
+                    this._onAnimationEnd();
+                }
                 break;
         }
     }
@@ -82,11 +84,13 @@ let NativeAnimationView = class NativeAnimationView extends BaseAnimationView {
     }
 
     start() {
+        this._animId = Date.now();
         if (this._translate) {
             this.formatPixelSize(this._translate);
         }
 
         this._dispatch(UIManager.BaiduAnimationView.Commands.start, [{
+            animId: this._animId,
             rotate: this._rotate,
             translate: this._translate,
             scale: this._scale,

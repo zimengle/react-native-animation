@@ -46,7 +46,7 @@ let BaseAnimationView = class BaseAnimationView extends React.Component {
     }
 
     setTranslate(translate) {
-        this._translate = translate;
+        this._translate = JSON.parse(JSON.stringify(translate));
         return this;
     }
 
